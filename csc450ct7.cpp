@@ -1,9 +1,33 @@
 /*
- * For the first part of your Portfolio Project, you will create a C++ application that will exhibit concurrency concepts. Your application should create two threads that will act as counters. One thread should count up to 20. Once thread one reaches 20, then a second thread should be used to count down to 0. For your created code, provide a detailed analysis of appropriate concepts that could impact your application. Specifically, address:
- *
+ * Critical Thinking 7
+ * Daniel Grover
+ * CSC 450
  */
 
+using namespace std;
+#include <iostream>
+#include <thread>
+
+
+void countUp() {
+	for (int i = 0; i <= 20; ++i) {
+		std::cout << "Counting up: " << i << std::endl;
+	}
+}
+void countDown() {
+	for (int i = 20; i >= 0; --i) {
+		std::cout << "Counting down: " << i << std::endl;
+	}
+}
 
 int main(int argc, char **argv) {
+	thread countUpThread(countUp);
+	thread countDownThread(countDown);
+
+	countUpThread.join(); // Wait for it to finish
+	std::cout << "Counting up is done!" << std::endl;
+
+	countDownThread.join(); // Wait for this one to finish too
+	std::cout << "All done counting!" << std::endl;
 	return 0;
 }
